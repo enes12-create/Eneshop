@@ -1,0 +1,2754 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENESHOP - Premium Luxury Collection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f0f0f;
+            --secondary: #f8f7f5;
+            --light-bg: #fafaf9;
+            --accent: #d4af37;
+            --accent-dark: #a68329;
+            --text: #2c2c2c;
+            --text-light: #666666;
+            --border: #e8e4df;
+            --success: #2ecc71;
+            --gradient-1: linear-gradient(135deg, #f8f7f5 0%, #ede5d8 100%);
+            --gradient-accent: linear-gradient(135deg, #d4af37 0%, #a68329 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 250, 249, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logo-image {
+            width: 48px;
+            height: 48px;
+            border-radius: 0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            font-family: 'Belleza', serif;
+            text-transform: none;
+        }
+
+        .logo:hover .logo-image {
+            box-shadow: 0 8px 20px rgba(201, 168, 118, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .logo:hover .logo-text {
+            color: var(--accent);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: var(--text);
+            width: 200px;
+            font-size: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-light);
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            color: var(--accent);
+            transform: scale(1.15);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            animation: fadeIn 0.6s ease-in;
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: calc(100vh - 70px);
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            right: -200px;
+            top: -200px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+            left: -150px;
+            bottom: -150px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-40px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 14px 44px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 14px 44px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.35);
+            transform: translateY(-4px);
+        }
+
+        /* Shop Page */
+        .shop {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .shop-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .shop-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .shop-header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .filters-bar {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .filter-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .filter-group select {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .filter-group select:hover {
+            border-color: var(--accent);
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .range-slider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .range-slider input {
+            width: 150px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #f0ebe2 0%, #e8dcd0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4c5b9;
+            font-size: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 6px 14px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            z-index: 10;
+        }
+
+        .wish-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255,255,255,0.95);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .wish-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .wish-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .product-content {
+            padding: 1.8rem;
+        }
+
+        .product-category {
+            color: var(--accent);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+            color: var(--primary);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            font-size: 12px;
+        }
+
+        .stars {
+            color: var(--accent);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .product-price .original {
+            text-decoration: line-through;
+            color: var(--text-light);
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .product-btn:hover {
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
+            transform: translateY(-3px);
+        }
+
+        /* Product Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 2001;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f0ebe2 0%, #e8dcd0 100%);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .modal-info .product-category {
+            margin-bottom: 1rem;
+        }
+
+        .modal-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-price {
+            font-size: 1.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .option-group select {
+            width: 100%;
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .quantity-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .quantity-btn {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .quantity-input {
+            width: 60px;
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .modal-desc {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 2px;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+
+        .modal-btn.add {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .modal-btn.add:hover {
+            box-shadow: 0 10px 30px rgba(201, 168, 118, 0.3);
+        }
+
+        .modal-btn.close {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        /* Cart Page */
+        .cart-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .cart-empty p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .cart-items {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 2px;
+            display: grid;
+            grid-template-columns: 120px 1fr 150px 100px;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #f0ebe2 0%, #e8dcd0 100%);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .cart-item-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-self: center;
+        }
+
+        .cart-item-quantity button {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .cart-item-price {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .cart-item-remove {
+            text-align: right;
+        }
+
+        .remove-btn {
+            background: none;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .cart-summary {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 2px;
+            max-width: 400px;
+            margin-left: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .summary-line.total {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            border: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 0;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            box-shadow: 0 10px 30px rgba(201, 168, 118, 0.3);
+        }
+
+        /* Wishlist Page */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--gradient-1);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 12px;
+            border: 1.5px solid var(--accent);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.1);
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 2px;
+            color: var(--text);
+        }
+
+        .newsletter-form button {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: 1px;
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .newsletter-form button:hover {
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.2rem 2rem;
+            border-radius: 6px;
+            animation: slideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1500;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Page Sections */
+        .page-header {
+            background: linear-gradient(135deg, #f8f7f5 0%, #ede5d8 100%);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .page-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-content h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+        }
+
+        .page-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .page-content ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .page-content li {
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .contact-info {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            margin: 1.5rem 0;
+        }
+
+        .contact-item strong {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-center {
+                display: none;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .cart-item {
+                grid-template-columns: 100px 1fr;
+                gap: 1rem;
+            }
+
+            .cart-item-quantity,
+            .cart-item-price,
+            .cart-item-remove {
+                grid-column: 1 / -1;
+                justify-self: auto;
+            }
+
+            .filters-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-group select {
+                width: 100%;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo" onclick="showPage('home')">
+            <div class="logo-image" id="logoImg">
+    <img src="Logo.png" alt="Eneshop" style="width: 100%; height: 100%; object-fit: contain;">
+</div>
+            <div class="logo-text">Eneshop</div>
+        </div>
+        <div class="nav-center">
+            <a onclick="showPage('home')" data-i18n="nav.home">Home</a>
+            <a onclick="showPage('shop')" data-i18n="nav.shop">Shop</a>
+            <a onclick="showPage('wishlist')" data-i18n="nav.wishlist">Wishlist</a>
+        </div>
+        <div class="language-selector" id="languageSelector" style="display: flex; gap: 0.5rem; align-items: center;">
+            <button onclick="setLanguage('de')" id="langDe" style="border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 11px; transition: all 0.3s;" title="Deutsch">🇩🇪 DE</button>
+            <button onclick="setLanguage('en')" id="langEn" style="border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 11px; transition: all 0.3s;" title="English">🇬🇧 EN</button>
+            <button onclick="setLanguage('tr')" id="langTr" style="border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 11px; transition: all 0.3s;" title="Türkçe">🇹🇷 TR</button>
+        </div>
+        <div class="nav-right">
+            <input type="text" class="search-box" id="searchInput" placeholder="Search products...">
+            <button class="icon-btn" onclick="showPage('wishlist')">
+                <i class="fas fa-heart"></i>
+                <span class="badge" id="wishcount">0</span>
+            </button>
+            <button class="icon-btn" onclick="showPage('cart')">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="badge" id="cartcount">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 data-i18n="hero.title">Luxury Collection</h1>
+                <p data-i18n="hero.desc">Discover our carefully curated selection of premium luxury items. Each piece represents the pinnacle of craftsmanship and elegance.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="showPage('shop')" data-i18n="hero.btn1">Explore Now</button>
+                    <button class="btn-secondary" onclick="scrollToSection('newsletter')" data-i18n="hero.btn2">Newsletter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="shop" style="padding-top: 2rem;">
+            <div id="newsletter" class="newsletter" style="margin-top: 0;">
+                <h3 data-i18n="newsletter.title">Join Our Community</h3>
+                <p data-i18n="newsletter.desc">Get exclusive access to new collections and special offers</p>
+                <div class="newsletter-form">
+                    <input type="email" data-i18n-placeholder="newsletter.input" placeholder="Your email...">
+                    <button onclick="subscribe()" data-i18n="newsletter.btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Page -->
+    <div id="shop" class="page">
+        <div class="shop">
+            <div class="shop-header">
+                <h2 data-i18n="shop.title">Our Collection</h2>
+                <p data-i18n="shop.subtitle">Premium Luxury Items</p>
+            </div>
+
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label data-i18n="shop.category">Category</label>
+                    <select onchange="filterProducts()">
+                        <option value="" data-i18n-option="filter.all">All Categories</option>
+                        <option value="watches" data-i18n-option="filter.watches">Watches</option>
+                        <option value="bags" data-i18n-option="filter.bags">Bags</option>
+                        <option value="jewelry" data-i18n-option="filter.jewelry">Jewelry</option>
+                        <option value="accessories" data-i18n-option="filter.accessories">Accessories</option>
+                        <option value="fashion" data-i18n-option="filter.fashion">Fashion</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label data-i18n="shop.price">Price Range</label>
+                    <div class="range-slider">
+                        <span>€</span>
+                        <input type="range" min="0" max="10000" value="10000" onchange="filterProducts()" id="priceRange">
+                        <span id="priceValue">€10000</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label data-i18n="shop.sort">Sort By</label>
+                    <select onchange="sortProducts()">
+                        <option value="newest" data-i18n-option="shop.sort1">Newest</option>
+                        <option value="price-low" data-i18n-option="shop.sort2">Price: Low to High</option>
+                        <option value="price-high" data-i18n-option="shop.sort3">Price: High to Low</option>
+                        <option value="rating" data-i18n-option="shop.sort4">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Page -->
+    <div id="wishlist" class="page">
+        <div class="shop">
+            <h2 style="margin-bottom: 2rem; color: var(--primary);" data-i18n="wishlist.title">My Wishlist</h2>
+            <div class="wishlist-grid" id="wishlistGrid">
+                <!-- Wishlist items loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart" class="page">
+        <div class="cart-container">
+            <h2 style="margin-bottom: 2rem; color: var(--primary);" data-i18n="cart.title">Shopping Cart</h2>
+            <div id="cartContent">
+                <!-- Cart items loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.about">About ENESHOP</h1>
+            <p data-i18n="about.subtitle">Premium Luxury Since 2020</p>
+        </div>
+        <div class="page-content">
+            <h2 data-i18n="about.story">Our Story</h2>
+            <p>ENESHOP was founded with a singular vision: to bring the world's finest luxury items to customers who appreciate the finer things in life. We curate every piece in our collection with meticulous care.</p>
+            
+            <h2 data-i18n="about.mission">Our Mission</h2>
+            <p>We believe that true luxury is not just about the price—it's about the craftsmanship, the heritage, and the story behind each item. Our mission is to connect discerning customers with authentic, premium products from the world's most prestigious brands.</p>
+            
+            <h2 data-i18n="about.quality">Quality & Authenticity</h2>
+            <p>Every product in our collection is carefully verified for authenticity and quality. We work directly with authorized dealers and master craftsmen to ensure that every piece meets our exacting standards.</p>
+            
+            <h2 data-i18n="about.values">Our values</h2>
+            <ul>
+                <li><strong>Authenticity:</strong> Every item is guaranteed genuine</li>
+                <li><strong>Excellence:</strong> Only the finest quality products</li>
+                <li><strong>Trust:</strong> Complete transparency in all transactions</li>
+                <li><strong>Service:</strong> Exceptional customer care and support</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.contact">Contact Us</h1>
+            <p>We're here to help</p>
+        </div>
+        <div class="page-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong data-i18n="contact.email">📧 Email Support:</strong><br>
+                    support@eneshop.com<br>
+                    Response time: Within 24 hours
+                </div>
+                <div class="contact-item">
+                    <strong data-i18n="contact.phone">📞 Phone:</strong><br>
+                    +49 (0) 123 456789<br>
+                    Monday - Friday: 9am - 6pm CET
+                </div>
+                <div class="contact-item">
+                    <strong data-i18n="contact.address">📍 Address:</strong><br>
+                    ENESHOP Headquarters<br>
+                    Premium Luxury Street 42<br>
+                    10115 Berlin, Germany
+                </div>
+                <div class="contact-item">
+                    <strong data-i18n="contact.chat">💬 Live Chat:</strong><br>
+                    Available on website Monday-Friday 10am - 5pm CET
+                </div>
+            </div>
+            <h2 data-i18n="contact.message">Send us a message</h2>
+            <form style="max-width: 500px;">
+                <input type="text" data-i18n-placeholder="contact.name" placeholder="Your Name" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--border); border-radius: 4px;">
+                <input type="email" placeholder="Your Email" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--border); border-radius: 4px;">
+                <textarea placeholder="Your Message" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--border); border-radius: 4px; height: 150px; resize: none;"></textarea>
+                <button type="button" class="btn-primary" style="margin-top: 10px;" onclick="showNotification('Thank you! We received your message.')">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FAQ Page -->
+    <div id="help" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.help">Help & FAQ</h1>
+            <p>Answers to your questions</p>
+        </div>
+        <div class="page-content">
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">How can I track my order?</h3>
+            <p>Once your order ships, you'll receive a tracking number via email. You can use this number to track your package in real-time on our shipping partner's website.</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">Do you ship internationally?</h3>
+            <p>Yes! We ship to over 150 countries worldwide. Shipping costs and delivery times vary by location. International orders may be subject to customs duties.</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">Are all products authentic?</h3>
+            <p>Absolutely. Every item in our collection is 100% authentic. We verify authenticity with each manufacturer and provide certificates of authenticity with premium items.</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">What is your return policy?</h3>
+            <p>We offer hassle-free 30-day returns on most items. Products must be in original condition with packaging. See our Returns page for complete details.</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">Do you offer gift wrapping?</h3>
+            <p>Yes! Premium gift wrapping is available for an additional fee. Select this option during checkout to present your gift beautifully.</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">How can I contact support?</h3>
+            <p>Visit our Contact page or email support@eneshop.com. Our team responds within 24 hours on business days.</p>
+            
+            <h2 style="margin-top: 3rem;">Data & Storage Management</h2>
+            <p>Your shopping data (cart, wishlist, and newsletter subscriptions) is safely stored on your device using browser LocalStorage. Here's what you should know:</p>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">📦 What data is saved?</h3>
+            <ul>
+                <li><strong>Shopping Cart:</strong> All products you add with quantity, size, and color</li>
+                <li><strong>Wishlist (Favorites):</strong> Products you mark with the heart icon</li>
+                <li><strong>Newsletter Emails:</strong> Email addresses for our newsletter</li>
+            </ul>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">💾 How is it stored?</h3>
+            <p>Your data is saved locally in your browser's storage, not on our servers. This means:</p>
+            <ul>
+                <li>✓ Only you can see your data on this device</li>
+                <li>✓ Your data persists after closing the browser</li>
+                <li>✓ Your data works offline</li>
+                <li>⚠️ Data will be lost if you clear browser cache</li>
+            </ul>
+            
+            <h3 style="color: var(--primary); margin-top: 2rem;">🗑️ How to clear your data:</h3>
+            <div style="background: var(--light-bg); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Option 1: Clear Cart Only</strong></p>
+                <p>Go to your Shopping Cart and click the "Clear Cart" button. Only your shopping cart will be cleared.</p>
+                <button class="btn-primary" style="margin-top: 1rem;" onclick="showPage('cart')">Go to Cart</button>
+            </div>
+            
+            <div style="background: var(--light-bg); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Option 2: Reset Everything (Cart + Wishlist + Newsletter)</strong></p>
+                <p>Click the button below to completely reset all your saved data on this device. This cannot be undone!</p>
+                <button class="btn-primary" style="margin-top: 1rem; background: var(--gradient-accent);" onclick="resetAllData()">Reset All Data</button>
+            </div>
+            
+            <div style="background: var(--light-bg); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Option 3: Use Browser Developer Tools</strong></p>
+                <p>Open your browser (F12 → Application → LocalStorage) and manually delete the keys:</p>
+                <ul>
+                    <li><code style="background: white; padding: 2px 6px; margin: 0 2px;">eneshop_cart</code></li>
+                    <li><code style="background: white; padding: 2px 6px; margin: 0 2px;">eneshop_wishlist</code></li>
+                    <li><code style="background: white; padding: 2px 6px; margin: 0 2px;">eneshop_subscribers</code></li>
+                </ul>
+                <p style="font-size: 12px; color: var(--text-light); margin-top: 1rem;">Or simply clear your browser cache/cookies.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipping Page -->
+    <div id="shipping" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.shipping">Shipping & Delivery</h1>
+            <p>Fast and secure worldwide shipping</p>
+        </div>
+        <div class="page-content">
+            <h2>Shipping Options</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Standard Shipping (5-7 business days)</strong><br>
+                    €15 | Free for orders over €200
+                </div>
+                <div class="contact-item">
+                    <strong>Express Shipping (2-3 business days)</strong><br>
+                    €45
+                </div>
+                <div class="contact-item">
+                    <strong>Overnight Delivery (1 business day)</strong><br>
+                    €85
+                </div>
+            </div>
+            
+            <h2>International Shipping</h2>
+            <p>We ship to most countries worldwide. International orders typically take 7-14 business days. Customs and import duties are the customer's responsibility.</p>
+            
+            <h2>Order Tracking</h2>
+            <p>All orders include tracking information. You'll receive a tracking number via email as soon as your order ships. Track your package 24/7 on our shipping partner's website.</p>
+            
+            <h2>Packaging</h2>
+            <p>Your order is carefully packaged in eco-friendly materials and premium boxes to ensure safe arrival. We use insured shipping for all orders over €500.</p>
+        </div>
+    </div>
+
+    <!-- Returns Page -->
+    <div id="returns" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.returns">Returns & Exchanges</h1>
+            <p>We make returns simple</p>
+        </div>
+        <div class="page-content">
+            <h2>30-Day Return Policy</h2>
+            <p>Unsatisfied with your purchase? We offer a hassle-free 30-day money-back guarantee on most items. Here's how it works:</p>
+            
+            <h2>Return Process</h2>
+            <ol style="padding-left: 2rem;">
+                <li>Contact our support team at support@eneshop.com with your order number</li>
+                <li>Receive a prepaid shipping label</li>
+                <li>Pack the item securely in original packaging</li>
+                <li>Ship it back to us</li>
+                <li>Receive your refund within 5-7 business days</li>
+            </ol>
+            
+            <h2>Return Conditions</h2>
+            <ul>
+                <li>Item must be in original, unworn condition</li>
+                <li>Original packaging and tags must be included</li>
+                <li>Returns accepted within 30 days of purchase</li>
+                <li>Customized or personalized items may not be returnable</li>
+            </ul>
+            
+            <h2>Exchanges</h2>
+            <p>Need a different size or color? We offer free exchanges with prepaid shipping labels. Simply contact our support team to arrange your exchange.</p>
+        </div>
+    </div>
+
+    <!-- Privacy Page -->
+    <div id="privacy" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.privacy">Privacy Policy</h1>
+            <p>Your privacy is important to us</p>
+        </div>
+        <div class="page-content">
+            <h2>Data Collection</h2>
+            <p>We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us. This includes your name, email address, shipping address, and payment information.</p>
+            
+            <h2>How We Use Your Data</h2>
+            <p>Your information is used to:</p>
+            <ul>
+                <li>Process and fulfill your orders</li>
+                <li>Send you order updates and marketing communications</li>
+                <li>Improve our products and services</li>
+                <li>Protect against fraud and ensure security</li>
+                <li>Comply with legal obligations</li>
+            </ul>
+            
+            <h2>Data Protection</h2>
+            <p>We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, and disclosure. All payment information is encrypted and secured.</p>
+            
+            <h2>GDPR Compliance</h2>
+            <p>ENESHOP complies with GDPR regulations. You have the right to access, rectify, or delete your personal data. Contact support@eneshop.com to exercise these rights.</p>
+            
+            <h2>Third-Party Services</h2>
+            <p>We use third-party services for payment processing and shipping. These providers are contractually obligated to maintain the confidentiality of your information.</p>
+        </div>
+    </div>
+
+    <!-- Terms Page -->
+    <div id="terms" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.terms">Terms & Conditions</h1>
+            <p>Please read our terms carefully</p>
+        </div>
+        <div class="page-content">
+            <h2>Use License</h2>
+            <p>This website and its content are provided "as is" for your personal, non-commercial use. You may not reproduce, distribute, or transmit any content without our written permission.</p>
+            
+            <h2>Product Information</h2>
+            <p>We strive for accuracy in product descriptions and pricing. However, we do not warrant that product information is accurate, complete, or error-free. We reserve the right to correct prices and cancel orders with incorrect pricing.</p>
+            
+            <h2>Intellectual Property</h2>
+            <p>All content, including text, graphics, logos, and images, is the property of ENESHOP or its content suppliers. Unauthorized use is prohibited.</p>
+            
+            <h2>Limitation of Liability</h2>
+            <p>In no event shall ENESHOP be liable for any indirect, incidental, special, or consequential damages resulting from your use of the website or products.</p>
+            
+            <h2>Governing Law</h2>
+            <p>These terms are governed by the laws of Germany. Any disputes shall be resolved in the courts of Berlin, Germany.</p>
+            
+            <h2>Contact</h2>
+            <p>Questions about these terms? Contact us at legal@eneshop.com</p>
+        </div>
+    </div>
+
+    <!-- Imprint Page -->
+    <div id="imprint" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.imprint">Imprint</h1>
+            <p>Legal information</p>
+        </div>
+        <div class="page-content">
+            <div class="contact-info">
+                <h2>Company Information</h2>
+                <div>
+                    <strong>ENESHOP GmbH</strong><br>
+                    Premium Luxury Street 42<br>
+                    10115 Berlin, Germany<br><br>
+                    
+                    <strong>Contact:</strong><br>
+                    Email: info@eneshop.com<br>
+                    Phone: +49 (0) 123 456789<br><br>
+                    
+                    <strong>Management:</strong><br>
+                    CEO: Jane Luxury<br>
+                    CFO: Premium Manager<br><br>
+                    
+                    <strong>Registration:</strong><br>
+                    Trade Registry Number: HRB 123456 B<br>
+                    Tax ID: DE 123456789<br><br>
+                    
+                    <strong>Responsible For Content:</strong><br>
+                    ENESHOP Team<br>
+                    Premium Luxury Street 42<br>
+                    10115 Berlin, Germany<br><br>
+                    
+                    <strong>Dispute Resolution:</strong><br>
+                    We are committed to fair and transparent dispute resolution. For any concerns, please contact our support team.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookies Page -->
+    <div id="cookies" class="page">
+        <div class="page-header">
+            <h1 data-i18n="page.cookies">Cookie Settings</h1>
+            <p>Manage your preferences</p>
+        </div>
+        <div class="page-content">
+            <h2>What Are Cookies?</h2>
+            <p>Cookies are small data files stored on your device to enhance your browsing experience. They help us remember your preferences and understand how you use our website.</p>
+            
+            <h2>Types of Cookies We Use</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Essential Cookies:</strong><br>
+                    Required for basic website functionality. These cannot be disabled.
+                </div>
+                <div class="contact-item">
+                    <strong>Performance Cookies:</strong><br>
+                    Help us improve website performance by analyzing user behavior.
+                </div>
+                <div class="contact-item">
+                    <strong>Marketing Cookies:</strong><br>
+                    Allow us to deliver personalized content and advertisements.
+                </div>
+            </div>
+            
+            <h2>Your Cookie Choices</h2>
+            <p>You can control cookie preferences in your browser settings. Most browsers allow you to refuse cookies or alert you when cookies are being set. However, blocking cookies may affect website functionality.</p>
+            
+            <h2>Third-Party Cookies</h2>
+            <p>Some cookies are set by third-party services we use, such as analytics and marketing partners. Refer to their privacy policies for more information.</p>
+            
+            <button class="btn-primary" style="margin-top: 20px;" onclick="showNotification('Cookie preferences updated')">Save Preferences</button>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-content">
+            <div class="modal-image" id="modalImage">
+                <img src="" alt="">
+            </div>
+            <div class="modal-info">
+                <div class="product-category" id="modalCategory"></div>
+                <h2 id="modalTitle"></h2>
+                <div class="modal-rating">
+                    <span class="stars" id="modalRating"></span>
+                    <span id="modalReviews"></span>
+                </div>
+                <div class="modal-price" id="modalPrice"></div>
+                
+                <div class="option-group">
+                    <label>Size</label>
+                    <select id="sizeSelect">
+                        <option>One Size</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label>Color</label>
+                    <select id="colorSelect">
+                        <option>Black</option>
+                        <option>White</option>
+                        <option>Gold</option>
+                        <option>Silver</option>
+                    </select>
+                </div>
+
+                <div class="quantity-selector">
+                    <button class="quantity-btn" onclick="changeQuantity(-1)">−</button>
+                    <input type="number" class="quantity-input" id="quantityInput" value="1" min="1">
+                    <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                </div>
+
+                <p class="modal-desc" id="modalDesc"></p>
+
+                <div class="modal-buttons">
+                    <button class="modal-btn add" onclick="addToCart()">Add to Cart</button>
+                    <button class="modal-btn close" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== MULTILANGUAGE SYSTEM =====
+        let currentLanguage = localStorage.getItem('eneshop_language') || 'de';
+
+        const translations = {
+            de: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.shop": "Shop",
+                "nav.wishlist": "Wishlist",
+                "nav.search": "Produkte suchen...",
+                
+                // Hero
+                "hero.title": "Luxus-Kollektion",
+                "hero.desc": "Entdecken Sie unsere sorgfältig kuratierte Auswahl an Premium-Luxusartikeln. Jedes Stück repräsentiert die Höhe der Handwerkskunst und Eleganz.",
+                "hero.btn1": "Jetzt erkunden",
+                "hero.btn2": "Newsletter",
+                
+                // Newsletter
+                "newsletter.title": "Treten Sie unserer Community bei",
+                "newsletter.desc": "Erhalten Sie exklusiven Zugriff auf neue Kollektionen und spezielle Angebote",
+                "newsletter.input": "Ihre E-Mail...",
+                "newsletter.btn": "Abonnieren",
+                
+                // Shop
+                "shop.title": "Unsere Kollektion",
+                "shop.subtitle": "Premium-Luxusartikel",
+                "shop.category": "Kategorie",
+                "shop.price": "Preisbereich",
+                "shop.sort": "Sortieren nach",
+                "shop.sort1": "Neueste",
+                "shop.sort2": "Preis: Niedrig zu Hoch",
+                "shop.sort3": "Preis: Hoch zu Niedrig",
+                "shop.sort4": "Top bewertet",
+                "shop.cart": "In den Warenkorb",
+                
+                // Cart
+                "cart.title": "Einkaufswarenkorb",
+                "cart.empty": "Ihr Warenkorb ist leer",
+                "cart.continue": "Weitershoppen",
+                "cart.subtotal": "Zwischensumme",
+                "cart.shipping": "Versand",
+                "cart.tax": "Steuern",
+                "cart.total": "Gesamt",
+                "cart.checkout": "Zur Kasse",
+                "cart.clear": "Warenkorb leeren",
+                "cart.remove": "Entfernen",
+                
+                // Wishlist
+                "wishlist.title": "Meine Wunschliste",
+                "wishlist.empty": "Ihre Wunschliste ist leer",
+                
+                // Filter options
+                "filter.all": "Alle Kategorien",
+                "filter.watches": "Uhren",
+                "filter.bags": "Taschen",
+                "filter.jewelry": "Schmuck",
+                "filter.accessories": "Zubehör",
+                "filter.fashion": "Mode",
+                
+                // Pages
+                "page.about": "Über ENESHOP",
+                "page.contact": "Kontaktieren Sie uns",
+                "page.help": "Hilfe & häufig gestellte Fragen",
+                "page.shipping": "Versand & Lieferung",
+                "page.returns": "Rückgaben & Umtausch",
+                "page.privacy": "Datenschutz",
+                "page.terms": "Geschäftsbedingungen",
+                "page.imprint": "Impressum",
+                "page.cookies": "Cookie-Einstellungen",
+                
+                // About
+                "about.subtitle": "Premium Luxury seit 2020",
+                "about.story": "Unsere Geschichte",
+                "about.mission": "Unsere Mission",
+                "about.quality": "Qualität & Authentizität",
+                "about.values": "Unsere Werte",
+                
+                // Contact
+                "contact.email": "📧 E-Mail-Support:",
+                "contact.phone": "📞 Telefon:",
+                "contact.address": "📍 Adresse:",
+                "contact.chat": "💬 Live-Chat:",
+                "contact.message": "Senden Sie uns eine Nachricht",
+                "contact.name": "Ihr Name",
+                "contact.submit": "Nachricht senden",
+                
+                // Notifications
+                "notify.added": "zum Warenkorb hinzugefügt!",
+                "notify.removed": "Aus dem Warenkorb entfernt",
+                "notify.wishlist_added": "Zur Wunschliste hinzugefügt",
+                "notify.wishlist_removed": "Aus der Wunschliste entfernt",
+                "notify.email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein!",
+                "notify.email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein!",
+                "notify.subscribe_success": "✓ Vielen Dank für Ihr Abonnement! Überprüfen Sie Ihre E-Mail auf exklusive Angebote.",
+                "notify.checkout": "Kasse kommt bald!",
+                
+                // Footer
+                "footer.about": "ÜBER ENESHOP",
+                "footer.contact": "KONTAKT",
+                "footer.careers": "KARRIEREN",
+                "footer.press": "PRESSE",
+                "footer.support": "KUNDENSERVICE",
+                "footer.help": "Hilfe & häufig gestellte Fragen",
+                "footer.track": "BESTELLUNG VERFOLGEN",
+                "footer.legal": "RECHTLICHES & RICHTLINIEN",
+                "footer.follow": "FOLGEN SIE UNS",
+                "footer.newsletter": "NEWSLETTER",
+                "footer.sub_desc": "Abonnieren Sie exklusive Angebote",
+                "footer.copyright": "© 2026 ENESHOP. Alle Rechte vorbehalten. Premium Luxury Collection",
+                
+                // Categories
+                "cat.watches": "Uhren",
+                "cat.bags": "Taschen",
+                "cat.jewelry": "Schmuck",
+                "cat.accessories": "Zubehör",
+                "cat.fashion": "Mode"
+            },
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.shop": "Shop",
+                "nav.wishlist": "Wishlist",
+                "nav.search": "Search products...",
+                
+                // Hero
+                "hero.title": "Luxury Collection",
+                "hero.desc": "Discover our carefully curated selection of premium luxury items. Each piece represents the pinnacle of craftsmanship and elegance.",
+                "hero.btn1": "Explore Now",
+                "hero.btn2": "Newsletter",
+                
+                // Newsletter
+                "newsletter.title": "Join Our Community",
+                "newsletter.desc": "Get exclusive access to new collections and special offers",
+                "newsletter.input": "Your email...",
+                "newsletter.btn": "Subscribe",
+                
+                // Shop
+                "shop.title": "Our Collection",
+                "shop.subtitle": "Premium Luxury Items",
+                "shop.category": "Category",
+                "shop.price": "Price Range",
+                "shop.sort": "Sort By",
+                "shop.sort1": "Newest",
+                "shop.sort2": "Price: Low to High",
+                "shop.sort3": "Price: High to Low",
+                "shop.sort4": "Top Rated",
+                "shop.cart": "Add to Cart",
+                
+                // Cart
+                "cart.title": "Shopping Cart",
+                "cart.empty": "Your cart is empty",
+                "cart.continue": "Continue Shopping",
+                "cart.subtotal": "Subtotal",
+                "cart.shipping": "Shipping",
+                "cart.tax": "Tax",
+                "cart.total": "Total",
+                "cart.checkout": "Proceed to Checkout",
+                "cart.clear": "Clear Cart",
+                "cart.remove": "Remove",
+                
+                // Wishlist
+                "wishlist.title": "My Wishlist",
+                "wishlist.empty": "Your wishlist is empty",
+                
+                // Filter options
+                "filter.all": "All Categories",
+                "filter.watches": "Watches",
+                "filter.bags": "Bags",
+                "filter.jewelry": "Jewelry",
+                "filter.accessories": "Accessories",
+                "filter.fashion": "Fashion",
+                
+                // Pages
+                "page.about": "About ENESHOP",
+                "page.contact": "Contact Us",
+                "page.help": "Help & FAQ",
+                "page.shipping": "Shipping & Delivery",
+                "page.returns": "Returns & Exchanges",
+                "page.privacy": "Privacy Policy",
+                "page.terms": "Terms & Conditions",
+                "page.imprint": "Imprint",
+                "page.cookies": "Cookie Settings",
+                
+                // About
+                "about.subtitle": "Premium Luxury Since 2020",
+                "about.story": "Our Story",
+                "about.mission": "Our Mission",
+                "about.quality": "Quality & Authenticity",
+                "about.values": "Our values",
+                
+                // Contact
+                "contact.email": "📧 Email Support:",
+                "contact.phone": "📞 Phone:",
+                "contact.address": "📍 Address:",
+                "contact.chat": "💬 Live Chat:",
+                "contact.message": "Send us a message",
+                "contact.name": "Your Name",
+                "contact.submit": "Send Message",
+                
+                // Notifications
+                "notify.added": "added to cart!",
+                "notify.removed": "Item removed from cart",
+                "notify.wishlist_added": "Added to wishlist",
+                "notify.wishlist_removed": "Removed from wishlist",
+                "notify.email_required": "Please enter your email address!",
+                "notify.email_invalid": "Please enter a valid email address!",
+                "notify.subscribe_success": "✓ Thank you for subscribing! Check your email for exclusive offers.",
+                "notify.checkout": "Checkout coming soon!",
+                
+                // Footer
+                "footer.about": "ABOUT ENESHOP",
+                "footer.contact": "CONTACT",
+                "footer.careers": "CAREERS",
+                "footer.press": "PRESS",
+                "footer.support": "CUSTOMER SUPPORT",
+                "footer.help": "Help & FAQ",
+                "footer.track": "TRACK ORDER",
+                "footer.legal": "LEGAL & POLICIES",
+                "footer.follow": "FOLLOW US",
+                "footer.newsletter": "NEWSLETTER",
+                "footer.sub_desc": "Subscribe for exclusive offers",
+                "footer.copyright": "© 2026 ENESHOP. All rights reserved. Premium Luxury Collection",
+                
+                // Categories
+                "cat.watches": "Watches",
+                "cat.bags": "Bags",
+                "cat.jewelry": "Jewelry",
+                "cat.accessories": "Accessories",
+                "cat.fashion": "Fashion"
+            },
+            tr: {
+                // Navigation
+                "nav.home": "Ana Sayfa",
+                "nav.shop": "Mağaza",
+                "nav.wishlist": "İstek Listem",
+                "nav.search": "Ürün ara...",
+                
+                // Hero
+                "hero.title": "Lüks Koleksiyonu",
+                "hero.desc": "Dikkatle seçilmiş premium lüks ürünlerimizi keşfedin. Her parça, zanaatın ve zarafetin zirvesini temsil eder.",
+                "hero.btn1": "Şimdi Keşfet",
+                "hero.btn2": "Bülteni",
+                
+                // Newsletter
+                "newsletter.title": "Topluluğumuza Katılın",
+                "newsletter.desc": "Yeni koleksiyonlara ve özel tekliflere özel erişim sağlayın",
+                "newsletter.input": "E-postanız...",
+                "newsletter.btn": "Abone Ol",
+                
+                // Shop
+                "shop.title": "Koleksiyonumuz",
+                "shop.subtitle": "Premium Lüks Ürünler",
+                "shop.category": "Kategori",
+                "shop.price": "Fiyat Aralığı",
+                "shop.sort": "Sıralamak",
+                "shop.sort1": "En Yeni",
+                "shop.sort2": "Fiyat: Düşükten Yükseğe",
+                "shop.sort3": "Fiyat: Yüksekten Düşüğe",
+                "shop.sort4": "En Yüksek Puanlı",
+                "shop.cart": "Sepete Ekle",
+                
+                // Cart
+                "cart.title": "Alışveriş Sepeti",
+                "cart.empty": "Sepetiniz boş",
+                "cart.continue": "Alışverişe Devam Et",
+                "cart.subtotal": "Ara Toplam",
+                "cart.shipping": "Kargo",
+                "cart.tax": "Vergi",
+                "cart.total": "Toplam",
+                "cart.checkout": "Ödemeye Devam Et",
+                "cart.clear": "Sepeti Temizle",
+                "cart.remove": "Kaldır",
+                
+                // Wishlist
+                "wishlist.title": "İstek Listem",
+                "wishlist.empty": "İstek listeniz boş",
+                
+                // Filter options
+                "filter.all": "Tüm Kategoriler",
+                "filter.watches": "Saatler",
+                "filter.bags": "Çantalar",
+                "filter.jewelry": "Mücevher",
+                "filter.accessories": "Aksesuarlar",
+                "filter.fashion": "Moda",
+                
+                // Pages
+                "page.about": "ENESHOP Hakkında",
+                "page.contact": "Bize Ulaşın",
+                "page.help": "Yardım & Sık Sorulan Sorular",
+                "page.shipping": "Kargo & Teslimat",
+                "page.returns": "İadeler & Değişimler",
+                "page.privacy": "Gizlilik Politikası",
+                "page.terms": "Şartlar & Koşullar",
+                "page.imprint": "İmprint",
+                "page.cookies": "Çerez Ayarları",
+                
+                // About
+                "about.subtitle": "2020'den Beri Premium Lüks",
+                "about.story": "Bizim Hikayemiz",
+                "about.mission": "Misyonumuz",
+                "about.quality": "Kalite & Orijinallik",
+                "about.values": "Değerlerimiz",
+                
+                // Contact
+                "contact.email": "📧 E-Posta Desteği:",
+                "contact.phone": "📞 Telefon:",
+                "contact.address": "📍 Adres:",
+                "contact.chat": "💬 Canlı Sohbet:",
+                "contact.message": "Bize bir mesaj gönderin",
+                "contact.name": "Adınız",
+                "contact.submit": "Mesaj Gönder",
+                
+                // Notifications
+                "notify.added": "sepete eklendi!",
+                "notify.removed": "Ürün sepetten kaldırıldı",
+                "notify.wishlist_added": "İstek listesine eklendi",
+                "notify.wishlist_removed": "İstek listesinden kaldırıldı",
+                "notify.email_required": "Lütfen e-posta adresinizi girin!",
+                "notify.email_invalid": "Lütfen geçerli bir e-posta adresi girin!",
+                "notify.subscribe_success": "✓ Abone olduğunuz için teşekkürler! Özel teklifler için e-postanızı kontrol edin.",
+                "notify.checkout": "Ödeme yakında gelecek!",
+                
+                // Footer
+                "footer.about": "ENESHOP HAKKINDA",
+                "footer.contact": "İLETİŞİM",
+                "footer.careers": "KARİYER",
+                "footer.press": "BASIN",
+                "footer.support": "MÜŞTERİ DESTEĞİ",
+                "footer.help": "Yardım & Sık Sorulan Sorular",
+                "footer.track": "SİPARİŞİ TAKIP ET",
+                "footer.legal": "YASAL & POLİTİKALAR",
+                "footer.follow": "BİZİ TAKİP EDİN",
+                "footer.newsletter": "BÜLTEN",
+                "footer.sub_desc": "Özel teklifler için abone olun",
+                "footer.copyright": "© 2026 ENESHOP. Tüm hakları saklıdır. Premium Lüks Koleksiyonu",
+                
+                // Categories
+                "cat.watches": "Saatler",
+                "cat.bags": "Çantalar",
+                "cat.jewelry": "Mücevher",
+                "cat.accessories": "Aksesuarlar",
+                "cat.fashion": "Moda"
+            }
+        };
+
+        // Translation function
+        function t(key) {
+            return translations[currentLanguage]?.[key] || key;
+        }
+
+        // Set language function
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLanguage = lang;
+            localStorage.setItem('eneshop_language', lang);
+            updateAllTranslations();
+        }
+
+        // Update all translations in DOM
+        function updateAllTranslations() {
+            // Navigation
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                el.textContent = t(el.dataset.i18n);
+            });
+            
+            // Input placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                el.placeholder = t(el.dataset.i18nPlaceholder);
+            });
+            
+            // Select options
+            document.querySelectorAll('[data-i18n-option]').forEach(el => {
+                el.textContent = t(el.dataset.i18nOption);
+            });
+            
+            // Update language buttons
+            ['de', 'en', 'tr'].forEach(lang => {
+                const btn = document.getElementById('lang' + lang.toUpperCase());
+                if (btn) {
+                    btn.style.background = currentLanguage === lang ? 'var(--accent)' : 'white';
+                    btn.style.color = currentLanguage === lang ? 'white' : 'var(--text)';
+                }
+            });
+            
+            // Render products again with new language
+            if (document.querySelector('.page.active')?.id === 'shop') {
+                renderProducts(filteredProducts);
+            }
+            if (document.querySelector('.page.active')?.id === 'wishlist') {
+                renderWishlist();
+            }
+        }
+
+        // LocalStorage Functions
+        function saveCart() {
+            localStorage.setItem('eneshop_cart', JSON.stringify(cart));
+        }
+
+        function loadCart() {
+            const saved = localStorage.getItem('eneshop_cart');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveWishlist() {
+            localStorage.setItem('eneshop_wishlist', JSON.stringify(wishlist));
+        }
+
+        function loadWishlist() {
+            const saved = localStorage.getItem('eneshop_wishlist');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        // Newsletter Storage
+        function saveNewsletter(email) {
+            const subscribers = JSON.parse(localStorage.getItem('eneshop_subscribers')) || [];
+            if (!subscribers.includes(email)) {
+                subscribers.push(email);
+                localStorage.setItem('eneshop_subscribers', JSON.stringify(subscribers));
+            }
+            return !subscribers.includes(email);
+        }
+
+        // 22 Premium Products
+        const products = [
+            { id: 1, name: "Swiss Chronograph Watch", category: "watches", price: 2499, image: "⌚", rating: 4.8, reviews: 124, description: "Luxurious Swiss-made chronograph with automatic movement" },
+            { id: 2, name: "Italian Leather Handbag", category: "bags", price: 1899, image: "👜", rating: 4.9, reviews: 98, description: "Handcrafted from finest Italian leather" },
+            { id: 3, name: "Diamond Tennis Bracelet", category: "jewelry", price: 4999, image: "💎", rating: 5.0, reviews: 76, description: "18K gold with certified diamonds" },
+            { id: 4, name: "Silk Evening Scarf", category: "fashion", price: 399, image: "🎀", rating: 4.7, reviews: 45, description: "100% pure silk with hand-rolled edges" },
+            { id: 5, name: "Designer Sunglasses", category: "accessories", price: 799, image: "😎", rating: 4.6, reviews: 112, description: "UV protection with premium frames" },
+            { id: 6, name: "Luxury Perfume 100ml", category: "accessories", price: 599, image: "💐", rating: 4.8, reviews: 89, description: "Exclusive fragrance from rare ingredients" },
+            { id: 7, name: "Handmade Leather Shoes", category: "fashion", price: 1299, image: "👠", rating: 4.9, reviews: 67, description: "Italian craftsmanship at its finest" },
+            { id: 8, name: "Gold Pendant Necklace", category: "jewelry", price: 1599, image: "✨", rating: 5.0, reviews: 54, description: "14K gold with sapphire gemstone" },
+            { id: 9, name: "Cashmere Sweater", category: "fashion", price: 899, image: "🧶", rating: 4.7, reviews: 82, description: "Premium 100% cashmere knit" },
+            { id: 10, name: "Leather Travel Bag", category: "bags", price: 2199, image: "🎒", rating: 4.8, reviews: 91, description: "Durable leather with multiple compartments" },
+            { id: 11, name: "Pearl Earring Set", category: "jewelry", price: 1199, image: "🌟", rating: 4.9, reviews: 73, description: "Freshwater pearls with gold settings" },
+            { id: 12, name: "Silk Pillowcase", category: "accessories", price: 299, image: "🛏️", rating: 4.6, reviews: 156, description: "Pure mulberry silk for skin care" },
+            { id: 13, name: "Rolex Submariner Style", category: "watches", price: 3499, image: "⌚", rating: 4.9, reviews: 142, description: "Precision timekeeping instrument" },
+            { id: 14, name: "Crocodile Leather Belt", category: "accessories", price: 699, image: "🔗", rating: 4.7, reviews: 58, description: "Genuine crocodile with gold buckle" },
+            { id: 15, name: "Champagne Flutes Set", category: "accessories", price: 449, image: "🥂", rating: 4.8, reviews: 67, description: "Crystal glasses with platinum trim" },
+            { id: 16, name: "Designer Wallet", category: "accessories", price: 599, image: "💳", rating: 4.7, reviews: 103, description: "Italian leather with RFID protection" },
+            { id: 17, name: "Vintage Broch Pin", category: "jewelry", price: 849, image: "📍", rating: 4.9, reviews: 41, description: "Antique design with precious stones" },
+            { id: 18, name: "Silk Tie Collection", category: "fashion", price: 349, image: "🎩", rating: 4.6, reviews: 79, description: "Hand-loomed Italian silk" },
+            { id: 19, name: "Gold Cufflinks Set", category: "jewelry", price: 999, image: "💍", rating: 4.8, reviews: 52, description: "18K gold with engraving option" },
+            { id: 20, name: "Leather Gloves", category: "fashion", price: 399, image: "🧤", rating: 4.7, reviews: 65, description: "Soft Italian leather with silk lining" },
+            { id: 21, name: "Luxury Watch Box", category: "accessories", price: 299, image: "📦", rating: 4.8, reviews: 71, description: "Wooden case with velvet interior" },
+            { id: 22, name: "Diamond Ring", category: "jewelry", price: 5999, image: "💍", rating: 5.0, reviews: 89, description: "1.5 carat certified diamond" }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentProduct = null;
+        let filteredProducts = [...products];
+
+        // Initialize
+        function init() {
+            // Load saved data
+            cart = loadCart();
+            wishlist = loadWishlist();
+            
+            renderProducts();
+            updateBadges();
+            
+            // Setup search listener with safety check
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', searchProducts);
+            }
+            
+            // Setup price range listener with safety check
+            const priceRange = document.getElementById('priceRange');
+            if (priceRange) {
+                priceRange.addEventListener('change', function() {
+                    const priceValue = document.getElementById('priceValue');
+                    if (priceValue) {
+                        priceValue.textContent = '€' + this.value;
+                    }
+                    filterProducts();
+                });
+            }
+        }
+
+        // Render Products
+        function renderProducts(productsToRender = products) {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return; // Sicherheitscheck
+            
+            grid.innerHTML = productsToRender.map(product => `
+                <div class="product-card" onclick="openModal(${product.id})">
+                    <div class="product-image">
+                        <span style="font-size: 3rem;">${product.image}</span>
+                    </div>
+                    <button class="wish-btn ${wishlist.includes(product.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <span class="product-badge">SALE</span>
+                    <div class="product-content">
+                        <div class="product-category">${t('cat.' + product.category)}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-rating">
+                            <span class="stars">${'★'.repeat(Math.floor(product.rating))}</span>
+                            <span>(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">€${product.price}</div>
+                        <button class="product-btn" onclick="event.stopPropagation(); addQuickCart(${product.id})">${t('shop.cart')}</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal Functions
+        function openModal(productId) {
+            currentProduct = products.find(p => p.id === productId);
+            if (!currentProduct) return;
+            
+            const modalImage = document.getElementById('modalImage');
+            const modalCategory = document.getElementById('modalCategory');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPrice = document.getElementById('modalPrice');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalRating = document.getElementById('modalRating');
+            const modalReviews = document.getElementById('modalReviews');
+            const quantityInput = document.getElementById('quantityInput');
+            const productModal = document.getElementById('productModal');
+            
+            if (modalImage) modalImage.innerHTML = `<span style="font-size: 5rem;">${currentProduct.image}</span>`;
+            if (modalCategory) modalCategory.textContent = currentProduct.category;
+            if (modalTitle) modalTitle.textContent = currentProduct.name;
+            if (modalPrice) modalPrice.textContent = `€${currentProduct.price}`;
+            if (modalDesc) modalDesc.textContent = currentProduct.description;
+            if (modalRating) modalRating.textContent = '★'.repeat(Math.floor(currentProduct.rating));
+            if (modalReviews) modalReviews.textContent = `(${currentProduct.reviews} reviews)`;
+            if (quantityInput) quantityInput.value = 1;
+            if (productModal) productModal.classList.add('active');
+        }
+
+        function closeModal() {
+            const productModal = document.getElementById('productModal');
+            if (productModal) {
+                productModal.classList.remove('active');
+            }
+        }
+
+        function changeQuantity(change) {
+            const input = document.getElementById('quantityInput');
+            if (!input) return;
+            input.value = Math.max(1, parseInt(input.value) + change);
+        }
+
+        // Cart Functions
+        function addToCart() {
+            if (!currentProduct) return;
+            
+            const quantityInput = document.getElementById('quantityInput');
+            const sizeSelect = document.getElementById('sizeSelect');
+            const colorSelect = document.getElementById('colorSelect');
+            
+            if (!quantityInput || !sizeSelect || !colorSelect) return;
+            
+            const quantity = parseInt(quantityInput.value);
+            const size = sizeSelect.value;
+            const color = colorSelect.value;
+            
+            // Check if item with same product, size, and color already exists
+            const existingItem = cart.find(item => 
+                item.id === currentProduct.id && 
+                item.size === size && 
+                item.color === color
+            );
+            
+            if (existingItem) {
+                // Increase quantity if exists
+                existingItem.quantity = (existingItem.quantity || 1) + quantity;
+            } else {
+                // Add new item with quantity
+                cart.push({
+                    ...currentProduct,
+                    size,
+                    color,
+                    quantity,
+                    cartId: Date.now() + Math.random()
+                });
+            }
+            
+            saveCart();
+            updateBadges();
+            showNotification(`${t('notify.added').replace('added', currentProduct.name + ' ' + t('notify.added').split(' ')[0])}`);
+            closeModal();
+        }
+
+        function addQuickCart(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            // Check if item already exists
+            const existingItem = cart.find(item => 
+                item.id === product.id && 
+                item.size === 'One Size' && 
+                item.color === 'Black'
+            );
+            
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 1) + 1;
+            } else {
+                cart.push({
+                    ...product,
+                    size: 'One Size',
+                    color: 'Black',
+                    quantity: 1,
+                    cartId: Date.now() + Math.random()
+                });
+            }
+            
+            saveCart();
+            updateBadges();
+            showNotification(`${product.name} ${t('notify.added')}`);
+        }
+
+        function renderCart() {
+            const cartContent = document.getElementById('cartContent');
+            if (!cartContent) return;
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `<div class="cart-empty"><p>${t('cart.empty')}</p><button class="btn-primary" onclick="showPage('shop')">${t('cart.continue')}</button></div>`;
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+            const tax = Math.round(subtotal * 0.19);
+            const total = subtotal + tax;
+
+            const cartHTML = `
+                <div class="cart-items">
+                    ${cart.map(item => {
+                        const cartIdStr = JSON.stringify(item.cartId);
+                        return `
+                        <div class="cart-item">
+                            <div class="cart-item-image"><span style="font-size: 3rem;">${item.image}</span></div>
+                            <div class="cart-item-info">
+                                <h3>${item.name}</h3>
+                                <p>Size: ${item.size} | Color: ${item.color}</p>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <button onclick="decreaseQuantity(${cartIdStr})">−</button>
+                                <span>${item.quantity || 1}</span>
+                                <button onclick="increaseQuantity(${cartIdStr})">+</button>
+                            </div>
+                            <div class="cart-item-price">€${(item.price * (item.quantity || 1)).toLocaleString()}</div>
+                            <div class="cart-item-remove">
+                                <button class="remove-btn" onclick="removeFromCart(${cartIdStr})">${t('cart.remove')}</button>
+                            </div>
+                        </div>
+                    `;
+                    }).join('')}
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-line">
+                        <span>${t('cart.subtotal')}</span>
+                        <span>€${subtotal.toLocaleString()}</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>${t('cart.shipping')}</span>
+                        <span>FREE</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>${t('cart.tax')}</span>
+                        <span>€${tax.toLocaleString()}</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>${t('cart.total')}</span>
+                        <span>€${total.toLocaleString()}</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">${t('cart.checkout')}</button>
+                    <button class="checkout-btn" style="background: #e74c3c; margin-top: 10px;" onclick="clearCart()">${t('cart.clear')}</button>
+                </div>
+            `;
+            cartContent.innerHTML = cartHTML;
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            saveCart();
+            updateBadges();
+            renderCart();
+            showNotification(t('notify.removed'));
+        }
+
+        function increaseQuantity(cartId) {
+            const item = cart.find(item => item.cartId === cartId);
+            if (item) {
+                item.quantity = (item.quantity || 1) + 1;
+                saveCart();
+                renderCart();
+            }
+        }
+
+        function decreaseQuantity(cartId) {
+            const item = cart.find(item => item.cartId === cartId);
+            if (item) {
+                if ((item.quantity || 1) > 1) {
+                    item.quantity = (item.quantity || 1) - 1;
+                    saveCart();
+                    renderCart();
+                } else {
+                    removeFromCart(cartId);
+                }
+            }
+        }
+
+        function clearCart() {
+            if (confirm('Are you sure you want to clear your cart?')) {
+                cart = [];
+                saveCart();
+                updateBadges();
+                renderCart();
+                showNotification('Cart cleared');
+            }
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ This will permanently delete ALL your data:\n\n- Shopping Cart\n- Wishlist\n- Newsletter Subscriptions\n\nThis action CANNOT be undone. Are you sure?')) {
+                // Clear all data
+                cart = [];
+                wishlist = [];
+                localStorage.removeItem('eneshop_cart');
+                localStorage.removeItem('eneshop_wishlist');
+                localStorage.removeItem('eneshop_subscribers');
+                
+                updateBadges();
+                showNotification('✓ All data has been reset. Your device is now clean.');
+                
+                // Redirect to home after 2 seconds
+                setTimeout(() => {
+                    showPage('home');
+                }, 2000);
+            }
+        }
+
+        // Wishlist Functions
+        function toggleWishlist(productId) {
+            if (wishlist.includes(productId)) {
+                wishlist = wishlist.filter(id => id !== productId);
+                showNotification(t('notify.wishlist_removed'));
+            } else {
+                wishlist.push(productId);
+                showNotification(t('notify.wishlist_added'));
+            }
+            saveWishlist();
+            updateBadges();
+            
+            // Only re-render if we're on shop or wishlist page
+            const activePage = document.querySelector('.page.active');
+            if (activePage) {
+                const pageId = activePage.id;
+                if (pageId === 'shop') {
+                    renderProducts(filteredProducts);
+                } else if (pageId === 'wishlist') {
+                    renderWishlist();
+                }
+            }
+        }
+
+        function renderWishlist() {
+            const wishlistGrid = document.getElementById('wishlistGrid');
+            const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+            
+            if (wishlistProducts.length === 0) {
+                wishlistGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><p>${t('wishlist.empty')}</p><button class="btn-primary" onclick="showPage('shop')">${t('cart.continue')}</button></div>`;
+                return;
+            }
+
+            wishlistGrid.innerHTML = wishlistProducts.map(product => `
+                <div class="product-card" onclick="openModal(${product.id})">
+                    <div class="product-image">
+                        <span style="font-size: 3rem;">${product.image}</span>
+                    </div>
+                    <button class="wish-btn active" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <span class="product-badge">SALE</span>
+                    <div class="product-content">
+                        <div class="product-category">${t('cat.' + product.category)}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-rating">
+                            <span class="stars">${'★'.repeat(Math.floor(product.rating))}</span>
+                            <span>(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">€${product.price}</div>
+                        <button class="product-btn" onclick="event.stopPropagation(); addQuickCart(${product.id})">${t('shop.cart')}</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter & Search Functions
+        function filterProducts() {
+            const categorySelect = document.querySelector('[onchange="filterProducts()"]');
+            if (!categorySelect) return;
+            
+            const category = categorySelect.value;
+            const priceRange = document.getElementById('priceRange');
+            const maxPrice = priceRange ? priceRange.value : 10000;
+
+            filteredProducts = products.filter(p => {
+                const categoryMatch = !category || p.category === category;
+                const priceMatch = p.price <= maxPrice;
+                return categoryMatch && priceMatch;
+            });
+
+            renderProducts(filteredProducts);
+        }
+
+        function searchProducts() {
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput) return;
+            
+            const query = searchInput.value.toLowerCase();
+            filteredProducts = query === '' ? products : products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query)
+            );
+            renderProducts(filteredProducts);
+        }
+
+        function sortProducts() {
+            const sortSelect = document.querySelector('[onchange="sortProducts()"]');
+            if (!sortSelect) return;
+            
+            const sortBy = sortSelect.value;
+            
+            switch(sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    filteredProducts.sort((a, b) => b.id - a.id);
+            }
+            renderProducts(filteredProducts);
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.classList.add('active');
+            }
+            
+            if (pageId === 'cart') renderCart();
+            if (pageId === 'wishlist') renderWishlist();
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Utilities
+        function updateBadges() {
+            const cartCount = document.getElementById('cartcount');
+            const wishCount = document.getElementById('wishcount');
+            if (cartCount) cartCount.textContent = cart.length;
+            if (wishCount) wishCount.textContent = wishlist.length;
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+
+        function subscribe() {
+            // For home page newsletter
+            const emailInput = document.querySelector('.newsletter-form input[type="email"]');
+            if (!emailInput) return;
+            
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showNotification(t('notify.email_required'));
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification(t('notify.email_invalid'));
+                return;
+            }
+            
+            saveNewsletter(email);
+            emailInput.value = '';
+            showNotification(t('notify.subscribe_success'));
+        }
+
+        function subscribeFooter() {
+            // For footer newsletter
+            const emailInput = document.getElementById('footerNewsletterEmail');
+            if (!emailInput) return;
+            
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showNotification(t('notify.email_required'));
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification(t('notify.email_invalid'));
+                return;
+            }
+            
+            saveNewsletter(email);
+            emailInput.value = '';
+            showNotification(t('notify.subscribe_success'));
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function checkout() {
+            showNotification(t('notify.checkout'));
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            updateAllTranslations();
+            init();
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 data-i18n="footer.about">ABOUT ENESHOP</h4>
+                <ul>
+                    <li><a onclick="showPage('about')" data-i18n="page.about">About Us</a></li>
+                    <li><a onclick="showPage('contact')" data-i18n="page.contact">Contact</a></li>
+                    <li><a href="#" onclick="showNotification('Careers coming soon!')" data-i18n="footer.careers">Careers</a></li>
+                    <li><a href="#" onclick="showNotification('Press inquiries welcome!')" data-i18n="footer.press">Press</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 data-i18n="footer.support">CUSTOMER SUPPORT</h4>
+                <ul>
+                    <li><a onclick="showPage('help')" data-i18n="footer.help">Help & FAQ</a></li>
+                    <li><a onclick="showPage('shipping')" data-i18n="page.shipping">Shipping & Delivery</a></li>
+                    <li><a onclick="showPage('returns')" data-i18n="page.returns">Returns & Exchanges</a></li>
+                    <li><a href="#" onclick="showNotification('Track your order in your account!')" data-i18n="footer.track">Track Order</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 data-i18n="footer.legal">LEGAL & POLICIES</h4>
+                <ul>
+                    <li><a onclick="showPage('privacy')" data-i18n="page.privacy">Privacy Policy</a></li>
+                    <li><a onclick="showPage('terms')" data-i18n="page.terms">Terms & Conditions</a></li>
+                    <li><a onclick="showPage('imprint')" data-i18n="page.imprint">Imprint</a></li>
+                    <li><a onclick="showPage('cookies')" data-i18n="page.cookies">Cookie Settings</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4 data-i18n="footer.follow">FOLLOW US</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon" onclick="showNotification('Follow us on Instagram!')"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" onclick="showNotification('Like us on Facebook!')"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon" onclick="showNotification('Follow us on Twitter!')"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon" onclick="showNotification('Pin us on Pinterest!')"><i class="fab fa-pinterest"></i></a>
+                </div>
+                <h4 style="margin-top: 2rem;" data-i18n="footer.newsletter">NEWSLETTER</h4>
+                <p style="font-size: 12px; color: rgba(248,247,245,0.7);" data-i18n="footer.sub_desc">Subscribe for exclusive offers</p>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <input type="email" id="footerNewsletterEmail" data-i18n-placeholder="newsletter.input" placeholder="Your email" style="flex: 1; padding: 8px; border: 1px solid rgba(212,175,55,0.3); background: rgba(255,255,255,0.1); color: white; border-radius: 4px; font-size: 12px;">
+                    <button style="background: var(--accent); color: var(--primary); padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; transition: all 0.3s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" onclick="subscribeFooter()">Go</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p data-i18n="footer.copyright">&copy; 2026 ENESHOP. All rights reserved. Premium Luxury Collection | Made with ❤️</p>
+        </div>
+    </footer>
+
+    <style>
+        /* Enhanced Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: var(--secondary);
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+            border-top: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: rgba(248, 247, 245, 0.75);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid rgba(201, 168, 118, 0.4);
+            border-radius: 50%;
+            color: var(--accent);
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(201, 168, 118, 0.2);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(201, 168, 118, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(248, 247, 245, 0.6);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 2rem;
+            }
+
+            .footer {
+                padding: 3rem 1.5rem 1.5rem;
+                margin-top: 4rem;
+            }
+
+            .footer-section h4 {
+                font-size: 11px;
+            }
+        }
+    </style>
+</body>
+</html>
